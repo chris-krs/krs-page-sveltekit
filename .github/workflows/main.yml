@@ -1,0 +1,21 @@
+name: Update Submodule
+
+on:
+  repository_dispatch:
+    types: [notes_updated]
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Update submodule
+        run: |
+          git submodule update --remote --merge
+          git add notes
+          git commit -m "Update notes submodule"
+          git push
